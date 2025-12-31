@@ -1,4 +1,4 @@
-# pyAPNs
+# pyAPNsKit
 
 > 向Apple APNs服务发送请求以向用户推送信息
 
@@ -9,7 +9,7 @@
 快速向设备推送信息
 
 ```Python
-from pyAPNs import apns
+from pyAPNsKit import apns
 
 p8key=""
 with open('AuthKey_KeyID.p8','r') as p8file:
@@ -27,7 +27,7 @@ isSuccess=server.sendAlert('deviceID','title','subtitle','message',sound=True)
 ## 自定义推送
 
 ```Python
-from pyAPNs import apns,APNsHeader,APNsBody,types
+from pyAPNsKit import apns,APNsHeader,APNsBody,types
 
 p8key=""
 with open('AuthKey_KeyID.p8','r') as p8file:

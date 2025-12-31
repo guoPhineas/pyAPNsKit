@@ -1,4 +1,4 @@
-# pyAPNs
+# pyAPNsKit
 
 [简体中文](./docs/cn_zh.md)
 
@@ -11,7 +11,7 @@
 Quickly push information to devices
 
 ```Python
-from pyAPNs import apns
+from pyAPNsKit import apns
 
 p8key=""
 with open('AuthKey_KeyID.p8','r') as p8file:
@@ -29,7 +29,7 @@ isSuccess=server.sendAlert('deviceID','title','subtitle','message',sound=True)
 ## Customized
 
 ```Python
-from pyAPNs import apns,APNsHeader,APNsBody,types
+from pyAPNsKit import apns,APNsHeader,APNsBody,types
 
 p8key=""
 with open('AuthKey_KeyID.p8','r') as p8file:

@@ -1,5 +1,5 @@
-from pyAPNs import APNsHeader,APNsBody
-from pyAPNs import helper,types
+from pyAPNsKit import APNsHeader,APNsBody
+from pyAPNsKit import helper,types
 import httpx
 
 

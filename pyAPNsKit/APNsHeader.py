@@ -1,5 +1,5 @@
 import time,uuid,jwt
-from pyAPNs.types import PushType
+from pyAPNsKit.types import PushType
 
 class APNsHeader(dict):
     def __init__(self,teamID:str,topic:str,keyID:str,p8Key:str,pushType:PushType,apns_collapse_id:str=None,apns_priority:str='10',apns_id:str=None,apns_expiration:str=None):
