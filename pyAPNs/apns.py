@@ -1,6 +1,6 @@
 from pyAPNs import APNsHeader,APNsBody
 import httpx
-from pyAPNs.helper import *
+from pyAPNs import helper
 
 
 class apns:
@@ -11,22 +11,29 @@ class apns:
         
 
 
-def sendAPNsByDeviceID(deviceID,headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->bool:
-    with httpx.Client(http2=True) as client:
-        apnsApi=''
-        if isSandbox:
-            apnsApi=sandboxEnvironment
-        else:
-            apnsApi=productEnvironment
+def sendAPNsByDeviceID(deviceID:str,headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->bool:
+    
+    apnsApi=''
+    if isSandbox:
+        apnsApi=helper.sandboxEnvironment
+    else:
+        apnsApi=helper.productEnvironment
 
-        apnsApi=f'{apnsApi}/3/device/{deviceID}'
+    apnsApi=f'{apnsApi}/3/device/{deviceID}'
 
-        response=client.post(url=apnsApi,json=json,headers=headers)
-        (status_code,reason,apnsID)=checkResponse(response)
+    return helper.APNSRequest(apnsApi,json,headers)
 
-        if status_code==200:
-            print('Success: ',status_code,reason,apnsID)
-            return True
-        else:
-            print('Error: ',status_code,reason,apnsID)
-            return False
+def sendAPNsByDeviceID(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False):
+    
+    apnsApi=''
+    if isSandbox:
+        apnsApi=helper.sandboxEnvironment
+    else:
+        apnsApi=helper.productEnvironment
+
+    apnsApi=f'{apnsApi}/3/device/{deviceID}'
+    
+    for deviceID in deviceIDs:
+        if not helper.APNSRequest(apnsApi,json,headers):
+            print("Failed to send: ",deviceID)
+    

@@ -1,4 +1,4 @@
-from httpx import Response
+from httpx import Response,Client
 
 sandboxEnvironment='https://api.sandbox.push.apple.com'
 productEnvironment='https://api.push.apple.com'
@@ -38,3 +38,14 @@ def checkResponse(response:Response)->tuple[int,str,str]:
         case _:
             return (-1,'Unknown.','','')
         
+def APNSRequest(url,body,headers):
+    with Client(http2=True) as client:
+        response=client.post(url=url,json=body,headers=headers)
+        (status_code,reason,apnsID)=checkResponse(response)
+
+        if status_code==200:
+            print('Success: ',status_code,reason,apnsID)
+            return True
+        else:
+            print('Error: ',status_code,reason,apnsID)
+            return False
