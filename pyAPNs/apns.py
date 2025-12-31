@@ -46,7 +46,6 @@ def sendAPNsByDeviceIDs(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:A
                 failture.append(deviceID)
 
     if len(failture) != 0:
-        print()
         print("Finished. But some sending failed: ",failture)
     else:
         print("Finished.")
