@@ -4,7 +4,7 @@ class APNsBody(dict):
         self.addKey('aps',{})
         
     def addKey(self,key,value):
-        self.setdefault(key,value)
+        self[key]=value
         return self
     
     def withAlert(self,title:str,subtitle:str,message:str,launch_image:str=None,title_loc_key:str=None,title_loc_args:dict=None,subtitle_loc_key:str=None,subtitle_loc_args:dict=None,loc_key:str=None,loc_args:dict=None):
@@ -20,13 +20,13 @@ class APNsBody(dict):
                 "loc-key":loc_key,
                 "loc-args":loc_args
         }
-        self['aps'].setdefault('alert',values)
+        self['aps']['alert']=values
         return self
     
     def withSound(self,sound='default'):
-        self['aps'].setdefault('sound',sound)
+        self['aps']['sound']=sound
         return self
 
     def withBadge(self,badge:int):
-        self['aps'].setdefault('badge',badge)
+        self['aps']['badge']=badge
         return self

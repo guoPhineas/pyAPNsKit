@@ -15,10 +15,16 @@ class APNsHeader(dict):
         }
         jwtSignature=jwt.encode(payload,p8Key,headers=header)
 
-        self.setdefault('authorization',f"bearer {jwtSignature}")
-        self.setdefault('apns-push-type',pushType.value)
-        self.setdefault('apns-topic',topic)
-        if apns_expiration: self.setdefault('apns-id',apns_id)
-        if apns_expiration: self.setdefault('apns-expiration',apns_expiration)
-        if apns_priority: self.setdefault('apns-priority',apns_priority)
-        if apns_collapse_id: self.setdefault('apns-collapse-id',apns_collapse_id)
+        self['authorization']=f"bearer {jwtSignature}"
+        self['apns-push-type']=pushType.value
+        self['apns-topic']=topic
+        if apns_expiration: self['apns-id']=apns_id
+        if apns_expiration: self['apns-expiration']=apns_expiration
+        if apns_priority: self['apns-priority']=apns_priority
+        if apns_collapse_id: self['apns-collapse-id']=apns_collapse_id
+
+    def withAPNsCollapse(self,id:str):
+        self['apns-collapse-id']=id
+        return self
+    
+
