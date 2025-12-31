@@ -3,14 +3,6 @@ import httpx
 from pyAPNs import helper
 
 
-class apns:
-    def __init__(self,teamID,keyID,p8Key,):
-        pass
-    def sendToDevice(deviceID,headers:APNsHeader,json:APNsBody,isSandbox=False)->bool:
-        pass
-        
-
-
 def sendAPNsByDeviceID(deviceID:str,headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->bool:
     
     apnsApi=''
