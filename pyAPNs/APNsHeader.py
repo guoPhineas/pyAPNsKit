@@ -24,7 +24,8 @@ class APNsHeader(dict):
         if apns_collapse_id: self['apns-collapse-id']=apns_collapse_id
 
     def withAPNsCollapse(self,id:str):
-        self['apns-collapse-id']=id
-        return self
+        temp=self.copy()
+        temp['apns-collapse-id']=id
+        return temp
     
 
