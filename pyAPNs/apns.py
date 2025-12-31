@@ -1,5 +1,5 @@
 from pyAPNs import APNsHeader,APNsBody
-from pyAPNs import helper
+from pyAPNs import helper,types
 import httpx
 
 
@@ -50,4 +50,33 @@ def sendAPNsByDeviceIDs(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:A
     else:
         print("Finished.")
     return failture        
-    
+
+
+class Server:
+    def __init__(self,teamID:str,topic:str,keyID:str,p8Key:str,isSandbox=False):
+        self.teamID=teamID
+        self.topic=topic
+        self.keyID=keyID
+        self.p8Key=p8Key
+        self.isSandbox=isSandbox
+
+    def sendAlert(self,deviceID:str,title:str,subtitle:str,message:str,sound:str|bool=None,apns_collapse_id:str=None)->bool:
+        aPNsBody=APNsBody.APNsBody()\
+                    .withAlert(title,subtitle,message)
+        if not sound==None:
+            if type(sound)==bool and sound:
+                aPNsBody.withSound()
+            elif type(sound)==str:
+                aPNsBody.withSound(sound)
+            
+        return sendAPNsByDeviceID(deviceID,
+                           APNsHeader.APNsHeader(self.teamID,
+                                                 self.topic,
+                                                 self.keyID,
+                                                 self.p8Key,
+                                                 types.PushType.alert,
+                                                 apns_collapse_id
+                                                ),
+                            aPNsBody,
+                            self.isSandbox
+                )
