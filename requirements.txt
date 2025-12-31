@@ -1,0 +1,13 @@
+anyio==4.12.0
+certifi==2025.11.12
+cffi==2.0.0
+cryptography==46.0.3
+h11==0.16.0
+h2==4.3.0
+hpack==4.1.0
+httpcore==1.0.9
+httpx==0.28.1
+hyperframe==6.1.0
+idna==3.11
+pycparser==2.23
+PyJWT==2.10.1
