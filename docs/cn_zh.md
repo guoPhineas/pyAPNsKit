@@ -4,6 +4,12 @@
 
 
 
+```Shell
+pip install pyAPNsKit
+```
+
+
+
 ## 快速开始
 
 快速向设备推送信息

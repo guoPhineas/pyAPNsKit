@@ -6,6 +6,12 @@
 
 
 
+```Shell
+pip install pyAPNsKit
+```
+
+
+
 ## Get Started
 
 Quickly push information to devices
