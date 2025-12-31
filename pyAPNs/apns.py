@@ -24,7 +24,7 @@ def sendAPNsByDeviceID(deviceID:str,headers:APNsHeader.APNsHeader,json:APNsBody.
     return helper.APNSRequest(apnsApi,json,headers)
 
 
-def sendAPNsByDeviceID(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False):
+def sendAPNsByDeviceIDs(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False):
     
     apnsApi=''
     if isSandbox:
@@ -32,9 +32,10 @@ def sendAPNsByDeviceID(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:AP
     else:
         apnsApi=helper.productEnvironment
 
-    apnsApi=f'{apnsApi}/3/device/{deviceID}'
+    apnsApi=f'{apnsApi}/3/device/'
 
     for deviceID in deviceIDs:
-        if not helper.APNSRequest(apnsApi,json,headers):
+        url=apnsApi+deviceID
+        if not helper.APNSRequest(url,json,headers):
             print("Failed to send: ",deviceID)
     
