@@ -12,7 +12,7 @@ def checkResponse(response:Response)->tuple[int,str,str]:
             return (response.status_code,response.json().get('reason'),response.headers.get('apns-id'))
 
         
-def APNSRequest(url,body,headers):
+def APNSRequestOnce(url,body,headers):
     with Client(http2=True) as client:
         response=client.post(url=url,json=body,headers=headers)
         (status_code,reason,apnsID)=checkResponse(response)
@@ -23,3 +23,16 @@ def APNSRequest(url,body,headers):
         else:
             print('Error: ',status_code,reason,apnsID)
             return False
+        
+def APNSRequests(urls:list[str],body,headers):
+    with Client(http2=True) as client:
+        for url in urls:
+            response=client.post(url=url,json=body,headers=headers)
+            (status_code,reason,apnsID)=checkResponse(response)
+
+            if status_code==200:
+                print('Success: ',status_code,reason,apnsID)
+                return True
+            else:
+                print('Error: ',status_code,reason,apnsID)
+                return False
