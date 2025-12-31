@@ -1,8 +1,6 @@
 # pyAPNsKit
 
-[简体中文](./docs/cn_zh.md)
-
-> Send requests to Apple Push Notification service (APNs) to push notifications to users.
+> Send requests to Apple Push Notification service (APNs) to push notifications to users
 
 
 
