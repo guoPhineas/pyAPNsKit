@@ -28,6 +28,12 @@ def sendAPNsByDeviceIDs(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:A
 
     for deviceID in deviceIDs:
         url=apnsApi+deviceID
+        failture=[]
         if not helper.APNSRequest(url,json,headers):
-            print("Failed to send: ",deviceID)
+            failture.append(deviceID)
+        if len(failture) != 0:
+            print()
+            print("Finished. But some sending failed: ",failture)
+        return failture
+        
     
