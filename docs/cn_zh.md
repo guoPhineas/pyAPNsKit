@@ -21,7 +21,7 @@ p8key=""
 with open('AuthKey_KeyID.p8','r') as p8file:
     p8key=p8file.read()
 client=apns.Client("teamID","App_BundleID","KeyID",p8key)
-isSuccess=client.sendAlert('deviceID','title','subtitle','message',sound=True)
+isSuccess=client.sendAlert('deviceToken','title','subtitle','message',sound=True)
 ```
 
 > [!NOTE]
@@ -40,7 +40,7 @@ with open('AuthKey_KeyID.p8','r') as p8file:
     p8key=p8file.read()
 
 apnsHeader=APNsHeader.APNsHeader("teamID","topic","KeyID",p8key,types.PushType.alert)
-isSuccess=apns.pushByDeviceToken('deviceID',
+isSuccess=apns.pushByDeviceToken('deviceToken',
                apnsHeader
                 .withAPNsCollapse('Collapse')
                ,
