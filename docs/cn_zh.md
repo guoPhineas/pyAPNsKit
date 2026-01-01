@@ -1,6 +1,6 @@
 # pyAPNsKit
 
-> 向Apple APNs服务发送请求以向用户推送信息
+> 基于Token验证，通过HTTP/2向Apple APNs发送请求以向用户推送信息
 
 
 
