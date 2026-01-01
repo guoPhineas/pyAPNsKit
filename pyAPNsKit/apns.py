@@ -3,7 +3,7 @@ from pyAPNsKit import helper,types
 import httpx
 
 
-def sendAPNsByDeviceID(deviceID:str,headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->bool:
+def pushByDeviceToken(deviceID:str,headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->bool:
     
     apnsApi=''
     if isSandbox:
@@ -26,7 +26,7 @@ def sendAPNsByDeviceID(deviceID:str,headers:APNsHeader.APNsHeader,json:APNsBody.
 
 
 
-def sendAPNsByDeviceIDs(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->list[str]:
+def pushByDeviceTokens(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->list[str]:
     with httpx.Client(http2=True) as client:
         apnsApi=''
         if isSandbox:
@@ -52,7 +52,7 @@ def sendAPNsByDeviceIDs(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:A
     return failture        
 
 
-class Server:
+class Client:
     def __init__(self,teamID:str,topic:str,keyID:str,p8Key:str,isSandbox=False):
         self.teamID=teamID
         self.topic=topic
@@ -69,7 +69,7 @@ class Server:
             elif type(sound)==str:
                 aPNsBody.withSound(sound)
             
-        return sendAPNsByDeviceID(deviceID,
+        return pushByDeviceToken(deviceID,
                            APNsHeader.APNsHeader(self.teamID,
                                                  self.topic,
                                                  self.keyID,

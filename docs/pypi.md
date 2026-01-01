@@ -20,7 +20,7 @@ from pyAPNsKit import apns
 p8key=""
 with open('AuthKey_KeyID.p8','r') as p8file:
     p8key=p8file.read()
-server=apns.Server("teamID","App_BundleID","KeyID",p8key)
+client=apns.Client("teamID","App_BundleID","KeyID",p8key)
 isSuccess=server.sendAlert('deviceID','title','subtitle','message',sound=True)
 ```
 
@@ -40,7 +40,7 @@ with open('AuthKey_KeyID.p8','r') as p8file:
     p8key=p8file.read()
 
 apnsHeader=APNsHeader.APNsHeader("teamID","topic","KeyID",p8key,types.PushType.alert)
-isSuccess=apns.sendAPNsByDeviceID('deviceID',
+isSuccess=apns.pushByDeviceToken('deviceID',
                apnsHeader
                 .withAPNsCollapse('Collapse')
                ,
