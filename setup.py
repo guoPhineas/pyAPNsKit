@@ -20,7 +20,7 @@ def parse_requirements(filename):
 
 setuptools.setup(
     name="pyAPNsKit",
-    version="0.1.2",
+    version="0.1.3",
     author="Zonglin Phineas Guo",
     description="Send requests to Apple Push Notification service (APNs) to push notifications to users.",
     long_description=long_description,
