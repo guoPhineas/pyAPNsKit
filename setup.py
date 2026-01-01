@@ -37,7 +37,6 @@ setuptools.setup(
         "Topic :: Software Development",
         "Environment :: Web Environment",
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: Apache Software License"
     ],
     install_requires=parse_requirements("requirements.txt"),
 )
