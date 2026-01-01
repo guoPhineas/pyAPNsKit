@@ -23,7 +23,7 @@ p8key=""
 with open('AuthKey_KeyID.p8','r') as p8file:
     p8key=p8file.read()
 client=apns.Client("teamID","App_BundleID","KeyID",p8key)
-isSuccess=server.sendAlert('deviceID','title','subtitle','message',sound=True)
+isSuccess=client.sendAlert('deviceID','title','subtitle','message',sound=True)
 ```
 
 > [!NOTE]
