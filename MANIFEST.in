@@ -1,0 +1,2 @@
+include docs/pypi.md
+include requirements.txt
