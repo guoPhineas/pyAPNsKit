@@ -28,7 +28,7 @@ class APNsHeader(dict):
         self.p8Key=p8Key
         super().__init__()
         
-        jwtSignature=self.genJwtSignature(keyID,teamID,p8Key)
+        jwtSignature=self.genJwtSignature()
 
         self['authorization']=f"bearer {jwtSignature}"
         self['apns-push-type']=pushType.value

@@ -1,5 +1,5 @@
 from httpx import Response,Client,AsyncClient
-from APNsResponse import APNsResponse
+from pyAPNsKit import APNsResponse
 import asyncio
 
 sandboxEnvironment='https://api.sandbox.push.apple.com'
@@ -32,7 +32,7 @@ async def Http2ManyRequest(urls:list[str],body,headers)->list[Response]:
     * **headers** - Request headers for http2
 
     '''
-    with AsyncClient(http2=True) as client:
+    async with AsyncClient(http2=True) as client:
         tasks=[client.post(url=url,json=body,headers=headers) for url in urls]
         responses = await asyncio.gather(*tasks)
         return responses

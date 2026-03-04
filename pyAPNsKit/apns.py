@@ -63,7 +63,7 @@ class Client:
         self.p8Key=p8Key
         self.isSandbox=isSandbox
 
-    def sendAlert(self,deviceID:str,title:str,subtitle:str,message:str,sound:str|bool=None,apns_collapse_id:str=None)->bool:
+    async def sendAlert(self,deviceTokens:list[str],title:str,subtitle:str,message:str,sound:str|bool=None,apns_collapse_id:str=None)->list[APNsResponse.APNsResponse]:
         aPNsBody=APNsBody.APNsBody()\
                     .withAlert(title,subtitle,message)
         if not sound==None:
@@ -72,7 +72,7 @@ class Client:
             elif type(sound)==str:
                 aPNsBody.withSound(sound)
             
-        return pushByDeviceToken(deviceID,
+        return await asyncPushByDeviceTokens(deviceTokens,
                            APNsHeader.APNsHeader(self.teamID,
                                                  self.topic,
                                                  self.keyID,
@@ -82,4 +82,4 @@ class Client:
                                                 ),
                             aPNsBody,
                             self.isSandbox
-                ).isSuccess
+                )

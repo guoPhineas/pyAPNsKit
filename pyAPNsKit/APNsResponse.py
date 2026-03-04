@@ -11,7 +11,7 @@ class APNsResponse:
         
         '''
         self.status_code=response.status_code
-        self.reason=response.json().get('reason')
+        self.reason=response.json().get('reason') if self.status_code != 200 else "Success"
         self.apns_id=response.headers.get('apns-id')
         self.rawResponse=response
 
