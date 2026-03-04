@@ -1,55 +1,58 @@
-from pyAPNsKit import APNsHeader,APNsBody
+from pyAPNsKit import APNsHeader,APNsBody,APNsResponse
 from pyAPNsKit import helper,types
 import httpx
+import asyncio
 
 
-def pushByDeviceToken(deviceID:str,headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->bool:
-    
+def pushByDeviceToken(deviceTokens:str,headers:APNsHeader.APNsHeader|dict,json:APNsBody.APNsBody|dict,isSandbox=False)->APNsResponse.APNsResponse:
+    '''
+    Send APNs request via DeviceToken and return `APNsResponse`
+
+    **Parameters:**
+
+    * **deviceTokens** - DeviceToken
+    * **headers** - `APNsHeader` or a `dict`
+    * **json** - `APNsBody` or a `dict`
+    * **isSandbox** - *(optional)* Whether to use a sandbox environment. Default is `False`
+
+    '''
     apnsApi=''
     if isSandbox:
         apnsApi=helper.sandboxEnvironment
     else:
         apnsApi=helper.productEnvironment
 
-    url=f'{apnsApi}/3/device/{deviceID}'
+    url=f'{apnsApi}/3/device/{deviceTokens}'
 
-    with helper.Client(http2=True) as client:
-        response=client.post(url=url,json=json,headers=headers)
-        (status_code,reason,apnsID)=helper.checkResponse(response)
-
-        if status_code==200:
-            print('Success: ',status_code,reason,apnsID)
-            return True
-        else:
-            print('Error: ',status_code,reason,apnsID)
-            return False
+    return APNsResponse.APNsResponse(helper.Http2OnceRequest(url,json,headers))
 
 
+async def asyncPushByDeviceTokens(deviceTokens:list[str],headers:APNsHeader.APNsHeader|dict,json:APNsBody.APNsBody|dict,isSandbox=False)->list[APNsResponse.APNsResponse]:
+    '''
+    Send APNs requests via DeviceToken and return `list[APNSResponse]`.
+    **This method is asynchronous. **
 
-def pushByDeviceTokens(deviceIDs:list[str],headers:APNsHeader.APNsHeader,json:APNsBody.APNsBody,isSandbox=False)->list[str]:
-    with httpx.Client(http2=True) as client:
-        apnsApi=''
-        if isSandbox:
-            apnsApi=helper.sandboxEnvironment
-        else:
-            apnsApi=helper.productEnvironment
+    **Parameters:**
 
-        apnsApi=f'{apnsApi}/3/device/'
-        failture=[]
+    * **deviceTokens** - `list[DeviceToken]`
+    * **headers** - `APNsHeader` or a `dict`
+    * **json** - `APNsBody` or a `dict`
+    * **isSandbox** - *(optional)* Whether to use a sandbox environment. Default is `False`
+    '''
 
-        for deviceID in deviceIDs:
-            response=client.post(url=apnsApi+deviceID,json=json,headers=headers)
-            (status_code,reason,apnsID)=helper.checkResponse(response)
-
-            if status_code!=200:
-                print('Error: ',status_code,reason,apnsID)
-                failture.append(deviceID)
-
-    if len(failture) != 0:
-        print("Finished. But some sending failed: ",failture)
+    apnsApi=''
+    if isSandbox:
+        apnsApi=helper.sandboxEnvironment
     else:
-        print("Finished.")
-    return failture        
+        apnsApi=helper.productEnvironment
+
+    urls=[f'{apnsApi}/3/device/{deviceID}' for deviceID in deviceTokens]
+
+    responses=await helper.Http2ManyRequest(urls,json,headers)
+    
+    responses=[APNsResponse.APNsResponse(response) for response in responses]
+
+    return responses
 
 
 class Client:
@@ -79,4 +82,4 @@ class Client:
                                                 ),
                             aPNsBody,
                             self.isSandbox
-                )
+                ).isSuccess
