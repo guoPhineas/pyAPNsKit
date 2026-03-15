@@ -1,5 +1,8 @@
 class APNsBody(dict):
     def __init__(self):
+        '''
+        Structure of APNs request body.
+        '''
         super().__init__()
         self.addKey('aps',{})
         
