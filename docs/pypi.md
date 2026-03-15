@@ -12,7 +12,6 @@ pip install pyAPNsKit
 
 ## Get Started
 
-p8key=""
 Quickly push notifications to devices (async, batch supported)
 
 ```Python
@@ -49,8 +48,7 @@ asyncio.run(main())
 ## Customized
 
 ```Python
-p8key=""
-apnsHeader=APNsHeader.APNsHeader("teamID","topic","KeyID",p8key,types.PushType.alert)
+
 import asyncio
 from pyAPNsKit import apns, APNsHeader, APNsBody, types
 

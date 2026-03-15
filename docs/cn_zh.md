@@ -48,8 +48,7 @@ asyncio.run(main())
 ## 自定义推送
 
 ```Python
-p8key=""
-apnsHeader=APNsHeader.APNsHeader("teamID","topic","KeyID",p8key,types.PushType.alert)
+
 import asyncio
 from pyAPNsKit import apns, APNsHeader, APNsBody, types
 
